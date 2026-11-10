@@ -43,7 +43,7 @@ if (year) {
     label.textContent = 'FATALITY // HIGHLIGHT';
 
     const number = document.createElement('span');
-    number.textContent = `CLIP ${String(index + 1).padStart(2, '0')}`;
+    number.textContent = `CLIP #${String(index + 1).padStart(2, '0')}`;
 
     head.append(label, number);
 
