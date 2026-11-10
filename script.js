@@ -22,37 +22,23 @@ document.getElementById('year').textContent = new Date().getFullYear();
   if (!grid || !empty || !count) return;
 
   function makeClipCard(clip, index) {
-    const card = document.createElement('article');
+    const card = document.createElement('a');
     card.className = 'clip-card';
+    card.href = clip.url;
+    card.target = '_blank';
+    card.rel = 'noopener noreferrer';
+    card.setAttribute('aria-label', `Otwórz klip FATALITY numer ${index + 1} na Medal.tv`);
 
-    const head = document.createElement('div');
-    head.className = 'clip-card-head';
-    const label = document.createElement('span');
-    label.textContent = 'FATALITY // HIGHLIGHT';
+    const artwork = document.createElement('img');
+    artwork.className = 'clip-card-art';
+    artwork.src = 'assets/clip-card-bg.png';
+    artwork.alt = '';
+    artwork.loading = 'lazy';
+
     const number = document.createElement('span');
-    number.textContent = `CLIP ${String(index + 1).padStart(2, '0')}`;
-    head.append(label, number);
-
-    const frame = document.createElement('div');
-    frame.className = 'clip-frame';
-    const iframe = document.createElement('iframe');
-    iframe.src = clip.embedUrl;
-    iframe.title = 'Klip FATALITY z Medal.tv';
-    iframe.loading = 'lazy';
-    iframe.allow = 'autoplay; fullscreen; picture-in-picture';
-    iframe.allowFullscreen = true;
-    frame.appendChild(iframe);
-
-    const foot = document.createElement('div');
-    foot.className = 'clip-card-foot';
-    const open = document.createElement('a');
-    open.href = clip.url;
-    open.target = '_blank';
-    open.rel = 'noopener noreferrer';
-    open.textContent = 'OTWÓRZ NA MEDAL.TV ↗';
-    foot.appendChild(open);
-
-    card.append(head, frame, foot);
+    number.className = 'clip-card-number';
+    number.textContent = `#${String(index + 1).padStart(2, '0')}`;
+    card.append(artwork, number);
     return card;
   }
 
