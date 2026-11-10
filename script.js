@@ -32,74 +32,38 @@ if (year) {
   if (!grid || !empty || !count) return;
 
   function makeClipCard(clip, index) {
-    const card = document.createElement('article');
-    card.className = 'clip-card';
+  const card = document.createElement('a');
 
-    // Nagłówek
-    const head = document.createElement('div');
-    head.className = 'clip-card-head';
+  card.className = 'clip-card clip-poster';
+  card.href = clip.url;
+  card.target = '_blank';
+  card.rel = 'noopener noreferrer';
+  card.setAttribute('aria-label', `Otwórz klip numer ${index + 1}`);
 
-    const label = document.createElement('span');
-    label.textContent = 'FATALITY // HIGHLIGHT';
+  const number = String(index + 1).padStart(2, '0');
 
-    const number = document.createElement('span');
-    number.textContent = `CLIP #${String(index + 1).padStart(2, '0')}`;
+  card.innerHTML = `
+    <div class="clip-poster-bg"></div>
+    <div class="clip-poster-top">
+      <span>FATALITY // HIGHLIGHT</span>
+      <span>MEDAL.TV</span>
+    </div>
 
-    head.append(label, number);
+    <div class="clip-poster-content">
+      <span class="clip-poster-label">BEST MOMENTS</span>
+      <div class="clip-poster-number">CLIP <span>#${number}</span></div>
+      <div class="clip-poster-line"></div>
+      <span class="clip-poster-play">▶ OGLĄDAJ KLIP</span>
+    </div>
 
-    // Panel zamiast blokowanego iframe
-    const frame = document.createElement('div');
-    frame.className = 'clip-frame clip-external';
+    <div class="clip-poster-bottom">
+      <span>FATALITY CS2 TEAM</span>
+      <span>OPEN HIGHLIGHT ↗</span>
+    </div>
+  `;
 
-    const content = document.createElement('div');
-    content.className = 'clip-external-content';
-
-    const logo = document.createElement('div');
-    logo.className = 'clip-external-logo';
-    logo.textContent = 'F';
-
-    const title = document.createElement('h3');
-    title.textContent = 'FATALITY HIGHLIGHT';
-
-    const description = document.createElement('p');
-    description.textContent =
-      'Zobacz akcję naszej drużyny na Medal.tv';
-
-    content.append(logo, title, description);
-
-    // Bezpieczny link do Medal.tv
-    const clipUrl = clip.url || '';
-    let validUrl = '';
-
-    try {
-      const parsed = new URL(clipUrl);
-      if (
-        parsed.protocol === 'https:' &&
-        (parsed.hostname === 'medal.tv' ||
-         parsed.hostname.endsWith('.medal.tv'))
-      ) {
-        validUrl = parsed.href;
-      }
-    } catch (error) {
-      validUrl = '';
-    }
-
-    if (validUrl) {
-      const play = document.createElement('a');
-      play.className = 'clip-play-button';
-      play.href = validUrl;
-      play.target = '_blank';
-      play.rel = 'noopener noreferrer';
-      play.textContent = '▶ ODTWÓRZ KLIP';
-
-      content.appendChild(play);
-    } else {
-      const unavailable = document.createElement('p');
-      unavailable.textContent = 'Link do klipu jest niedostępny.';
-      content.appendChild(unavailable);
-    }
-
-    frame.appendChild(content);
+  return card;
+}
 
     // Stopka
     const foot = document.createElement('div');
