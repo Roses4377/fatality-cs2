@@ -35,10 +35,7 @@ document.getElementById('year').textContent = new Date().getFullYear();
     artwork.alt = '';
     artwork.loading = 'lazy';
 
-    const number = document.createElement('span');
-    number.className = 'clip-card-number';
-    number.textContent = `#${String(index + 1).padStart(2, '0')}`;
-    card.append(artwork, number);
+    card.appendChild(artwork);
     return card;
   }
 
